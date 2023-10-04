@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + TS</title>
+    <link rel="stylesheet" href="./src/style.css">
+    
+  </head>
+  <body>
+    <div class="mainWrapper">
+      <p>Stay up to date</p>
+      <h1>NEWS</h1>
+      <div class="newsBlock_wrapper">
+        <button class="newsBlock_button" id="prewPost">-</button>
+        <div class="newsBlock_post">
+          <h1 id="newsBlock_post_textHeader"></h1>
+          <h2 id="newsBlock_post_text"></h2>
+        </div>
+        <canvas class="newsBlock_Canvas" id="newsBlockCanvas"></canvas>
+        <button class="newsBlock_button" id="nextPost" onclick="applyContent()">+</button>
+      </div>
+        <div class="newsBlock_nav">
+          <button class="newsBlock_nav_button">1</button>
+          <button class="newsBlock_nav_button">2</button>
+          <button class="newsBlock_nav_button">3</button>
+          <button class="newsBlock_nav_button">4</button>
+          <button class="newsBlock_nav_button">5</button>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

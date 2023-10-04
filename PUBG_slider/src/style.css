@@ -1,0 +1,37 @@
+.newsBlock_wrapper {
+  position: relative;
+  border: 1px solid green;
+  background: black;
+}
+
+.newsBlock_Button {
+  position: absolute;
+  margin-bottom: 100px;
+}
+
+.newsBlock_post {
+  position: absolute;
+  display: inline-block;
+  border: solid 1px blue;
+  width: 200px;
+  height: 200px;
+  margin-right: -200px;
+  margin-top: 200px;
+  z-index: 1;
+}
+
+#newsBlock_post_textHeader {
+  color: aliceblue;
+  text-align: center;
+}
+
+#newsBlock_post_text {
+  text-align: center;
+  color: aliceblue;
+}
+
+.newsBlock_Canvas {
+  display: inline-block;
+  border: 1px solid green;
+  color: aliceblue;
+}
