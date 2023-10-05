@@ -7,13 +7,13 @@ const imageURI = [
   { imgBack: "../img/img_4_back.jpg", imgFront: "../img/img_4_front.png" },
   { imgBack: "../img/img_5_back.png", imgFront: "../img/img_5_front.png" },
 ];
-//`M 0 100 h ${canvas.width - 120} v ${canvas.height - 240} L ${canvas.width - 160} ${canvas.height - 90} H -${canvas.width - 40} Z`;
+
 const postData: mockData[] = [
-  { title: "header_1", text: "text_1", imgBack: null, imgBackStartPosition: {x: 0,y: 0}, imgFront: null, imgFrontStartPosition: {x: 0,y: 0}, imgFrontClipPath: "M 0 0 h 847 v 481  L 807 531 h -967 Z" },
-  { title: "header_2", text: "text_2", imgBack: null, imgBackStartPosition: {x: 0,y: 0}, imgFront: null, imgFrontStartPosition: {x: 0,y: 0}, imgFrontClipPath: "M 0 0 h 847 v 481  L 807 531 h -967 Z" },
-  { title: "header_3", text: "text_3", imgBack: null, imgBackStartPosition: {x: 0,y: 0}, imgFront: null, imgFrontStartPosition: {x: 0,y: 0}, imgFrontClipPath: "M 0 50 h 920 v 621  L 807 621 h -967 Z" },
-  { title: "header_4", text: "text_4", imgBack: null, imgBackStartPosition: {x: 0,y: 0}, imgFront: null, imgFrontStartPosition: {x: 0,y: 0}, imgFrontClipPath: "M 0 0 h 847 v 481  L 807 531 h -967 Z" },
-  { title: "header_5", text: "text_5", imgBack: null, imgBackStartPosition: {x: 0,y: 0}, imgFront: null, imgFrontStartPosition: {x: 0,y: 0}, imgFrontClipPath: "M 0 0 h 847 v 481  L 807 531 h -967 Z" },
+  { title: "header_1", text: "text_1", imgBack: null, imgBackStartPosition: { x: 0, y: 0 }, imgFront: null, imgFrontStartPosition: { x: 0, y: 0 }, imgFrontClipPath: "M 0 0 h 847 v 481  L 807 531 h -967 Z" },
+  { title: "header_2", text: "text_2", imgBack: null, imgBackStartPosition: { x: 0, y: 0 }, imgFront: null, imgFrontStartPosition: { x: 0, y: 0 }, imgFrontClipPath: "M 0 0 h 847 v 481  L 807 531 h -967 Z" },
+  { title: "header_3", text: "text_3", imgBack: null, imgBackStartPosition: { x: 0, y: 0 }, imgFront: null, imgFrontStartPosition: { x: 0, y: 0 }, imgFrontClipPath: "M 0 50 h 920 v 621  L 807 621 h -967 Z" },
+  { title: "header_4", text: "text_4", imgBack: null, imgBackStartPosition: { x: 0, y: 0 }, imgFront: null, imgFrontStartPosition: { x: 0, y: 0 }, imgFrontClipPath: "M 0 0 h 847 v 481  L 807 531 h -967 Z" },
+  { title: "header_5", text: "text_5", imgBack: null, imgBackStartPosition: { x: 0, y: 0 }, imgFront: null, imgFrontStartPosition: { x: 0, y: 0 }, imgFrontClipPath: "M 0 0 h 847 v 481  L 807 531 h -120 v 20 h -910 Z" },
 ];
 
 function getImages(): void {
@@ -34,27 +34,31 @@ canvas.height = 300;
 const ctx: CanvasRenderingContext2D = canvas.getContext("2d") as CanvasRenderingContext2D;
 
 let currentBackImage = new Image();
-let currentBackImageStartPosition : Object 
+let currentBackImageStartPosition: Object;
 let currentFrontImage = new Image();
-let currentFrontImageStartPosition : Object
-let currentFrontImageClipPath: string
+let currentFrontImageStartPosition: Object;
+let currentFrontImageClipPath: string;
 let currentTitle: string = "Title";
 let currText: string = "string";
+
 let counter: number = 0;
+let isParallaxAnimationAvailable = false;
+let currentPointerX: number;
+let previousPointerX: number | null = null;
 
-let currentPointerX: number
-
-function getPointerPosition(e) {
-  currentPointerX = e.clientX
+function getPointerPosition(e: PointerEvent): void {
+  currentPointerX = e.clientX;
 }
 
-window.addEventListener("mousemove", getPointerPosition)
+window.addEventListener("mousemove", getPointerPosition);
 
 setTimeout(changeContent, 25);
 let intervalGenerator = setInterval(changeContent, 4000);
 
 function changeContent() {
-window.removeEventListener("mousemove", getPointerPosition)
+  window.removeEventListener("mousemove", getPointerPosition);
+  isParallaxAnimationAvailable = false;
+  window.removeEventListener("mousemove", drawParallax);
   let currentElement: number = counter % 5;
 
   currentBackImage = postData[currentElement].imgBack;
@@ -81,7 +85,7 @@ function applyContent() {
   elem_text.innerText = currText;
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  
+
   ctx.save();
   ctx.clip(clipPath);
   let gradient = ctx.createRadialGradient(canvas.width, canvas.height / 2, 0, canvas.width, canvas.height / 2, canvas.width * 0.8);
@@ -90,17 +94,17 @@ function applyContent() {
   ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.globalCompositeOperation = "source-in";
-  ctx.drawImage(currentBackImage, currentBackImageStartPosition.x, currentBackImageStartPosition.y);
+  ctx.drawImage(currentBackImage, currentBackImageStartPosition.x + getImagePositionCorrection(), currentBackImageStartPosition.y);
   ctx.restore();
 
-  ctx.globalCompositeOperation="source-over"
-  clipPath = new Path2D(currentFrontImageClipPath)
+  ctx.globalCompositeOperation = "source-over";
+  clipPath = new Path2D(currentFrontImageClipPath);
   ctx.clip(clipPath);
-  ctx.drawImage(currentFrontImage, currentFrontImageStartPosition.x, currentFrontImageStartPosition.y);
-  
-  
-  window.addEventListener("mousemove", getPointerPosition)
+  ctx.drawImage(currentFrontImage, currentFrontImageStartPosition.x + getImagePositionCorrection() * 2, currentFrontImageStartPosition.y);
 
+  window.addEventListener("mousemove", getPointerPosition);
+  isParallaxAnimationAvailable = true;
+  window.addEventListener("mousemove", drawParallax);
 }
 
 function changeSlide(e: Event) {
@@ -118,3 +122,38 @@ function changeSlide(e: Event) {
     elem.addEventListener("click", changeSlide);
   }
 })();
+
+function drawParallax(): void {
+  if (isParallaxAnimationAvailable) {
+    if (currentPointerX != previousPointerX) {
+      let str: string = `M 0 100 h ${canvas.width - 120} v ${canvas.height - 240} L ${canvas.width - 160} ${canvas.height - 90} H -${canvas.width - 40} Z`;
+      let clipPath = new Path2D(str);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      ctx.save();
+      ctx.clip(clipPath);
+      let gradient = ctx.createRadialGradient(canvas.width, canvas.height / 2, 0, canvas.width, canvas.height / 2, canvas.width * 0.8);
+      gradient.addColorStop(0, "#FFFFFFFF");
+      gradient.addColorStop(1, "#00000000");
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.globalCompositeOperation = "source-in";
+      ctx.drawImage(currentBackImage, currentBackImageStartPosition.x + getImagePositionCorrection(), currentBackImageStartPosition.y);
+      ctx.restore();
+
+      ctx.globalCompositeOperation = "source-over";
+      clipPath = new Path2D(currentFrontImageClipPath);
+      ctx.clip(clipPath);
+      ctx.drawImage(currentFrontImage, currentFrontImageStartPosition.x + getImagePositionCorrection() * 2, currentFrontImageStartPosition.y);
+      previousPointerX = currentPointerX;
+    }
+
+    window.requestAnimationFrame(drawParallax);
+  }
+}
+
+function getImagePositionCorrection(): number {
+  let result: number;
+  result = (window.innerWidth / 2 - currentPointerX) / 100;
+  return result;
+}
