@@ -118,30 +118,3 @@ function changeSlide(e: Event) {
     elem.addEventListener("click", changeSlide);
   }
 })();
-
-/*function applyContent() {
-  canvas.width = currentBackImage.width;
-  canvas.height = currentBackImage.height;
-
-  let elem_header: HTMLElement = document.getElementById("newsBlock_post_textHeader")!;
-  let elem_text: HTMLElement = document.getElementById("newsBlock_post_text")!;
-  let str: string = `M 0 100 h ${canvas.width - 120} v ${canvas.height - 240} L ${canvas.width - 160} ${canvas.height - 90} H -${canvas.width - 40} Z`;
-  let clipPath = new Path2D(str);
-
-  elem_header.innerText = currentTitle;
-  elem_text.innerText = currText;
-
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.save();
-  ctx.clip(clipPath);
-  ctx.drawImage(currentBackImage, 0, 0, canvas.width, canvas.height);
-  let gradient = ctx.createRadialGradient(canvas.width, canvas.height / 2, 0, canvas.width, canvas.height / 2, canvas.width * 0.8);
-  gradient.addColorStop(0, "#FFFFFF00");
-  gradient.addColorStop(0,5, "#FFFFFF00");
-  gradient.addColorStop(1, "#000000FF");
-  ctx.fillStyle = gradient;
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  ctx.restore();
-  ctx.drawImage(currentFrontImage, 0, 0);
-}*/
