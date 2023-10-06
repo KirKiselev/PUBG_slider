@@ -42,9 +42,10 @@ let currentTitle: string = "Title";
 let currText: string = "string";
 
 let counter: number = 0;
-let isParallaxAnimationAvailable = false;
 let currentPointerX: number;
 let previousPointerX: number | null = null;
+let firstDrawAlphaChannel = 0;
+let firstDrawPositionCorrection = -50;
 
 function getPointerPosition(e: PointerEvent): void {
   currentPointerX = e.clientX;
@@ -53,11 +54,11 @@ function getPointerPosition(e: PointerEvent): void {
 window.addEventListener("mousemove", getPointerPosition);
 
 setTimeout(changeContent, 25);
+
 let intervalGenerator = setInterval(changeContent, 4000);
 
 function changeContent() {
   window.removeEventListener("mousemove", getPointerPosition);
-  isParallaxAnimationAvailable = false;
   window.removeEventListener("mousemove", drawParallax);
   let currentElement: number = counter % 5;
 
@@ -78,37 +79,52 @@ function applyContent() {
 
   let elem_header: HTMLElement = document.getElementById("newsBlock_post_textHeader")!;
   let elem_text: HTMLElement = document.getElementById("newsBlock_post_text")!;
-  let str: string = `M 0 100 h ${canvas.width - 120} v ${canvas.height - 240} L ${canvas.width - 160} ${canvas.height - 90} H -${canvas.width - 40} Z`;
-  let clipPath = new Path2D(str);
+  
+  
 
   elem_header.innerText = currentTitle;
   elem_text.innerText = currText;
+  firstDrawAlphaChannel =0
 
+  drawFirst();
+}
+
+function drawFirst() {
+  
+  let str: string = `M 0 100 h ${canvas.width - 120} v ${canvas.height - 240} L ${canvas.width - 160} ${canvas.height - 90} H -${canvas.width - 40} Z`;
+  let clipPath = new Path2D(str);
+
+  if(firstDrawAlphaChannel <= 1) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+  ctx.globalAlpha = firstDrawAlphaChannel;
   ctx.save();
   ctx.clip(clipPath);
-  let gradient = ctx.createRadialGradient(canvas.width, canvas.height / 2, 0, canvas.width, canvas.height / 2, canvas.width * 0.8);
+  let gradient = ctx.createRadialGradient(canvas.width - (firstDrawPositionCorrection - firstDrawPositionCorrection*firstDrawAlphaChannel), canvas.height / 2, 0, canvas.width - (firstDrawPositionCorrection - firstDrawPositionCorrection*firstDrawAlphaChannel), canvas.height / 2, canvas.width * 0.8);
   gradient.addColorStop(0, "#FFFFFFFF");
   gradient.addColorStop(1, "#00000000");
   ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.globalCompositeOperation = "source-in";
-  ctx.drawImage(currentBackImage, currentBackImageStartPosition.x + getImagePositionCorrection(), currentBackImageStartPosition.y);
+  ctx.drawImage(currentBackImage, currentBackImageStartPosition.x + getImagePositionCorrection() - (firstDrawPositionCorrection - firstDrawPositionCorrection*firstDrawAlphaChannel), currentBackImageStartPosition.y);
   ctx.restore();
 
   ctx.globalCompositeOperation = "source-over";
   clipPath = new Path2D(currentFrontImageClipPath);
   ctx.clip(clipPath);
-  ctx.drawImage(currentFrontImage, currentFrontImageStartPosition.x + getImagePositionCorrection() * 2, currentFrontImageStartPosition.y);
+  ctx.drawImage(currentFrontImage, currentFrontImageStartPosition.x + getImagePositionCorrection() * 2 - (firstDrawPositionCorrection - firstDrawPositionCorrection*firstDrawAlphaChannel), currentFrontImageStartPosition.y);
 
-  window.addEventListener("mousemove", getPointerPosition);
-  isParallaxAnimationAvailable = true;
-  window.addEventListener("mousemove", drawParallax);
+  firstDrawAlphaChannel+= 0.025;
+  window.requestAnimationFrame(drawFirst)
+  }
+  else {
+    window.addEventListener("mousemove", getPointerPosition);
+    window.addEventListener("mousemove", drawParallax);
+  }
 }
 
 function changeSlide(e: Event) {
-  let number: number = parseInt(e.target.innerText);
+  let number: number = parseInt(e.target.innerText) - 1;
   counter = number;
   changeContent();
   clearInterval(intervalGenerator);
@@ -124,7 +140,7 @@ function changeSlide(e: Event) {
 })();
 
 function drawParallax(): void {
-  if (isParallaxAnimationAvailable) {
+
     if (currentPointerX != previousPointerX) {
       let str: string = `M 0 100 h ${canvas.width - 120} v ${canvas.height - 240} L ${canvas.width - 160} ${canvas.height - 90} H -${canvas.width - 40} Z`;
       let clipPath = new Path2D(str);
@@ -148,9 +164,9 @@ function drawParallax(): void {
       previousPointerX = currentPointerX;
     }
 
-    window.requestAnimationFrame(drawParallax);
+    
   }
-}
+
 
 function getImagePositionCorrection(): number {
   let result: number;
