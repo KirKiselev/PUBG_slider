@@ -1,22 +1,38 @@
 .newsBlock_wrapper {
   position: relative;
-  border: 1px solid green;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid yellow;
   background: black;
 }
 
-.newsBlock_Button {
-  position: absolute;
-  margin-bottom: 100px;
+.newsBlock_button {
+  box-sizing: border-box;
+  background-color: black;
+  border: 1px solid orange;
+  color: white;
+  width:  50px;
+  height: 50px;
+  z-index: 1;
+}
+
+#prevPost {
+margin-right: -25px;
+}
+
+#nextPost {
+  margin-left: -25px;
 }
 
 .newsBlock_post {
-  position: absolute;
-  display: inline-block;
+  box-sizing: border-box;
   border: solid 1px blue;
   width: 200px;
   height: 200px;
-  margin-right: -200px;
-  margin-top: 200px;
+  margin-right: -250px;
+  margin-left: 50px;
   z-index: 1;
 }
 
@@ -31,7 +47,6 @@
 }
 
 .newsBlock_Canvas {
-  display: inline-block;
   border: 1px solid green;
   color: aliceblue;
 }
