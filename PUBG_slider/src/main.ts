@@ -9,11 +9,51 @@ const imageURI = [
 ];
 
 const postData: mockData[] = [
-  { title: "header_1", text: "text_1", imgBack: null, imgBackStartPosition: { x: 0, y: 0 }, imgFront: null, imgFrontStartPosition: { x: 0, y: 0 }, imgFrontClipPath: "M 0 0 h 847 v 481  L 807 531 h -967 Z" },
-  { title: "header_2", text: "text_2", imgBack: null, imgBackStartPosition: { x: 0, y: 0 }, imgFront: null, imgFrontStartPosition: { x: 0, y: 0 }, imgFrontClipPath: "M 0 0 h 847 v 481  L 807 531 h -967 Z" },
-  { title: "header_3", text: "text_3", imgBack: null, imgBackStartPosition: { x: 0, y: 0 }, imgFront: null, imgFrontStartPosition: { x: 0, y: 0 }, imgFrontClipPath: "M 0 50 h 920 v 621  L 807 621 h -967 Z" },
-  { title: "header_4", text: "text_4", imgBack: null, imgBackStartPosition: { x: 0, y: 0 }, imgFront: null, imgFrontStartPosition: { x: 0, y: 0 }, imgFrontClipPath: "M 0 0 h 847 v 481  L 807 531 h -967 Z" },
-  { title: "header_5", text: "text_5", imgBack: null, imgBackStartPosition: { x: 0, y: 0 }, imgFront: null, imgFrontStartPosition: { x: 0, y: 0 }, imgFrontClipPath: "M 0 0 h 847 v 481  L 807 531 h -120 v 20 h -910 Z" },
+  {
+    title: "header_1",
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    imgBack: null,
+    imgBackStartPosition: { x: 0, y: 0 },
+    imgFront: null,
+    imgFrontStartPosition: { x: 0, y: 0 },
+    imgFrontClipPath: "M 0 0 h 847 v 481  L 807 531 h -967 Z",
+  },
+  {
+    title: "header_2",
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    imgBack: null,
+    imgBackStartPosition: { x: 0, y: 0 },
+    imgFront: null,
+    imgFrontStartPosition: { x: 0, y: 0 },
+    imgFrontClipPath: "M 0 0 h 847 v 481  L 807 531 h -967 Z",
+  },
+  {
+    title: "header_3",
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    imgBack: null,
+    imgBackStartPosition: { x: 0, y: 0 },
+    imgFront: null,
+    imgFrontStartPosition: { x: 0, y: 0 },
+    imgFrontClipPath: "M 0 50 h 920 v 621  L 807 621 h -967 Z",
+  },
+  {
+    title: "header_4",
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    imgBack: null,
+    imgBackStartPosition: { x: 0, y: 0 },
+    imgFront: null,
+    imgFrontStartPosition: { x: 0, y: 0 },
+    imgFrontClipPath: "M 0 0 h 847 v 481  L 807 531 h -967 Z",
+  },
+  {
+    title: "header_5",
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    imgBack: null,
+    imgBackStartPosition: { x: 0, y: 0 },
+    imgFront: null,
+    imgFrontStartPosition: { x: 0, y: 0 },
+    imgFrontClipPath: "M 0 0 h 847 v 481  L 807 531 h -120 v 20 h -910 Z",
+  },
 ];
 
 function getImages(): void {
@@ -28,9 +68,8 @@ function getImages(): void {
 
 getImages();
 
+const wrapper = document.getElementById("newsBlockWrapper");
 const canvas: HTMLCanvasElement = document.getElementById("newsBlockCanvas") as HTMLCanvasElement;
-canvas.width = 600;
-canvas.height = 300;
 const ctx: CanvasRenderingContext2D = canvas.getContext("2d") as CanvasRenderingContext2D;
 
 let currentBackImage = new Image();
@@ -62,6 +101,10 @@ function changeContent() {
   window.removeEventListener("mousemove", drawParallax);
   let currentElement: number = counter % 5;
 
+  let newsPost = document.getElementById("newsBlock_post");
+  newsPost.className = "newsBlock_post";
+  newsPost.offsetWidth;
+
   currentBackImage = postData[currentElement].imgBack;
   currentBackImageStartPosition = postData[currentElement].imgBackStartPosition;
   currentFrontImage = postData[currentElement].imgFront;
@@ -79,45 +122,51 @@ function applyContent() {
 
   let elem_header: HTMLElement = document.getElementById("newsBlock_post_textHeader")!;
   let elem_text: HTMLElement = document.getElementById("newsBlock_post_text")!;
-  
-  
 
   elem_header.innerText = currentTitle;
   elem_text.innerText = currText;
-  firstDrawAlphaChannel =0
+  firstDrawAlphaChannel = 0;
 
   drawFirst();
 }
 
 function drawFirst() {
-  
+  let newsPost = document.getElementById("newsBlock_post");
   let str: string = `M 0 100 h ${canvas.width - 120} v ${canvas.height - 240} L ${canvas.width - 160} ${canvas.height - 90} H -${canvas.width - 40} Z`;
   let clipPath = new Path2D(str);
 
-  if(firstDrawAlphaChannel <= 1) {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  newsPost.className = "newsBlock_post shown";
 
-  ctx.globalAlpha = firstDrawAlphaChannel;
-  ctx.save();
-  ctx.clip(clipPath);
-  let gradient = ctx.createRadialGradient(canvas.width - (firstDrawPositionCorrection - firstDrawPositionCorrection*firstDrawAlphaChannel), canvas.height / 2, 0, canvas.width - (firstDrawPositionCorrection - firstDrawPositionCorrection*firstDrawAlphaChannel), canvas.height / 2, canvas.width * 0.8);
-  gradient.addColorStop(0, "#FFFFFFFF");
-  gradient.addColorStop(1, "#00000000");
-  ctx.fillStyle = gradient;
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.globalCompositeOperation = "source-in";
-  ctx.drawImage(currentBackImage, currentBackImageStartPosition.x + getImagePositionCorrection() - (firstDrawPositionCorrection - firstDrawPositionCorrection*firstDrawAlphaChannel), currentBackImageStartPosition.y);
-  ctx.restore();
+  if (firstDrawAlphaChannel <= 1) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  ctx.globalCompositeOperation = "source-over";
-  clipPath = new Path2D(currentFrontImageClipPath);
-  ctx.clip(clipPath);
-  ctx.drawImage(currentFrontImage, currentFrontImageStartPosition.x + getImagePositionCorrection() * 2 - (firstDrawPositionCorrection - firstDrawPositionCorrection*firstDrawAlphaChannel), currentFrontImageStartPosition.y);
+    ctx.globalAlpha = firstDrawAlphaChannel;
+    ctx.save();
+    ctx.clip(clipPath);
+    let gradient = ctx.createRadialGradient(
+      canvas.width - (firstDrawPositionCorrection - firstDrawPositionCorrection * firstDrawAlphaChannel),
+      canvas.height / 2,
+      0,
+      canvas.width - (firstDrawPositionCorrection - firstDrawPositionCorrection * firstDrawAlphaChannel),
+      canvas.height / 2,
+      canvas.width * 0.8
+    );
+    gradient.addColorStop(0, "#FFFFFFFF");
+    gradient.addColorStop(1, "#00000000");
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.globalCompositeOperation = "source-in";
+    ctx.drawImage(currentBackImage, currentBackImageStartPosition.x + getImagePositionCorrection() - (firstDrawPositionCorrection - firstDrawPositionCorrection * firstDrawAlphaChannel), currentBackImageStartPosition.y);
+    ctx.restore();
 
-  firstDrawAlphaChannel+= 0.025;
-  window.requestAnimationFrame(drawFirst)
-  }
-  else {
+    ctx.globalCompositeOperation = "source-over";
+    clipPath = new Path2D(currentFrontImageClipPath);
+    ctx.clip(clipPath);
+    ctx.drawImage(currentFrontImage, currentFrontImageStartPosition.x + getImagePositionCorrection() * 2 - (firstDrawPositionCorrection - firstDrawPositionCorrection * firstDrawAlphaChannel), currentFrontImageStartPosition.y);
+
+    firstDrawAlphaChannel += 0.025;
+    window.requestAnimationFrame(drawFirst);
+  } else {
     window.addEventListener("mousemove", getPointerPosition);
     window.addEventListener("mousemove", drawParallax);
   }
@@ -126,6 +175,7 @@ function drawFirst() {
 function changeSlide(e: Event) {
   let number: number = parseInt(e.target.innerText) - 1;
   counter = number;
+
   changeContent();
   clearInterval(intervalGenerator);
   intervalGenerator = setInterval(changeContent, 4000);
@@ -140,33 +190,29 @@ function changeSlide(e: Event) {
 })();
 
 function drawParallax(): void {
+  if (currentPointerX != previousPointerX) {
+    let str: string = `M 0 100 h ${canvas.width - 120} v ${canvas.height - 240} L ${canvas.width - 160} ${canvas.height - 90} H -${canvas.width - 40} Z`;
+    let clipPath = new Path2D(str);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    if (currentPointerX != previousPointerX) {
-      let str: string = `M 0 100 h ${canvas.width - 120} v ${canvas.height - 240} L ${canvas.width - 160} ${canvas.height - 90} H -${canvas.width - 40} Z`;
-      let clipPath = new Path2D(str);
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.save();
+    ctx.clip(clipPath);
+    let gradient = ctx.createRadialGradient(canvas.width, canvas.height / 2, 0, canvas.width, canvas.height / 2, canvas.width * 0.8);
+    gradient.addColorStop(0, "#FFFFFFFF");
+    gradient.addColorStop(1, "#00000000");
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.globalCompositeOperation = "source-in";
+    ctx.drawImage(currentBackImage, currentBackImageStartPosition.x + getImagePositionCorrection(), currentBackImageStartPosition.y);
+    ctx.restore();
 
-      ctx.save();
-      ctx.clip(clipPath);
-      let gradient = ctx.createRadialGradient(canvas.width, canvas.height / 2, 0, canvas.width, canvas.height / 2, canvas.width * 0.8);
-      gradient.addColorStop(0, "#FFFFFFFF");
-      gradient.addColorStop(1, "#00000000");
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.globalCompositeOperation = "source-in";
-      ctx.drawImage(currentBackImage, currentBackImageStartPosition.x + getImagePositionCorrection(), currentBackImageStartPosition.y);
-      ctx.restore();
-
-      ctx.globalCompositeOperation = "source-over";
-      clipPath = new Path2D(currentFrontImageClipPath);
-      ctx.clip(clipPath);
-      ctx.drawImage(currentFrontImage, currentFrontImageStartPosition.x + getImagePositionCorrection() * 2, currentFrontImageStartPosition.y);
-      previousPointerX = currentPointerX;
-    }
-
-    
+    ctx.globalCompositeOperation = "source-over";
+    clipPath = new Path2D(currentFrontImageClipPath);
+    ctx.clip(clipPath);
+    ctx.drawImage(currentFrontImage, currentFrontImageStartPosition.x + getImagePositionCorrection() * 2, currentFrontImageStartPosition.y);
+    previousPointerX = currentPointerX;
   }
-
+}
 
 function getImagePositionCorrection(): number {
   let result: number;
