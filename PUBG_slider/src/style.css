@@ -1,51 +1,75 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
 .mainWrapper {
-  min-width: 360px;
+  width: 100%;
+  min-width: 960px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: black;
+  border: 1px solid violet;
 }
 
 #newsBlockWrapper {
-  width: 80%;
+  display: block;
   position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
+  width: 80%;
+  height: 821px;
+  min-width: 960px;
+  border: 1px solid yellow;
   background: black;
 }
 
+.newsBlock_Canvas {
+  display: block;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: inherit;
+  height: 621px;
+  width: 921px;
+  border: 1px solid green;
+}
+
 .newsBlock_button {
+  display: block;
   visibility: hidden;
 }
 
-.shown {
-  opacity: 90%;
-}
-
-#newsBlock_holder {
+#newsBlock_postholder {
+  border: 1px solid blue;
+  display: block;
+  position: absolute;
+  top: 621px;
+  left: 0px;
   box-sizing: border-box;
-  width: 300px;
+  width: 100%;
+  height: 300px;
+  min-width: 300px;
   min-height: 200px;
-  margin-top: -15%;
-  margin-right: -50%;
-  margin-left: 50px;
   z-index: 1;
-
-  font-family: Arial, Helvetica, sans-serif, sans-serif;
-  font-size: 20px;
 }
 
 .newsBlock_post {
-  opacity: 100%;
-  width: 300px;
+  display: block;
+  position: absolute;
+  top: 0px;
+  opacity: 80%;
+  width: 100%;
+}
+
+.shown {
+  animation: easein, popup;
+  animation-duration: 1s, 0.5s;
+  animation-timing-function: ease-in, linear;
 }
 
 #newsBlock_post_textHeader {
-  font-size: 30px;
-
+  font-size: 24px;
   text-transform: uppercase;
   color: aliceblue;
   text-align: left;
@@ -53,19 +77,97 @@
 
 #newsBlock_post_text {
   font-size: 16px;
-  text-align: left;
+  text-align: justify;
   color: aliceblue;
 }
 
-.newsBlock_Canvas {
-  width: 100%;
-  border: 1px solid green;
-  color: aliceblue;
+.newsBlock_nav {
+  border: 1px solid orange;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
 }
 
 @media (width > 560px) {
+  .mainWrapper {
+    width: 100%;
+    min-width: 960px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    border: 1px solid violet;
+  }
+
   #newsBlockWrapper {
+    display: block;
+    position: relative;
+    width: 80%;
+    height: 621px;
+    min-width: 960px;
+    border: 1px solid yellow;
+    background: black;
+  }
+
+  .newsBlock_Canvas {
+    display: block;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    width: inherit;
+    height: 621px;
+    width: 921px;
+    border: 1px solid green;
+  }
+
+  .newsBlock_button {
+    display: block;
+    visibility: hidden;
+  }
+
+  #newsBlock_postholder {
+    border: 1px solid greenyellow;
+    display: block;
+    position: absolute;
+    top: 100px;
+    left: 100px;
+    box-sizing: border-box;
+    width: 30%;
+    height: 300px;
+    min-width: 300px;
+    min-height: 200px;
+    z-index: 1;
+  }
+
+  .newsBlock_post {
+    display: block;
+    opacity: 80%;
+    width: 100%;
+  }
+
+  #newsBlock_post_textHeader {
+    font-size: 24px;
+    text-transform: uppercase;
+    color: aliceblue;
+    text-align: left;
+  }
+
+  #newsBlock_post_text {
+    font-size: 16px;
+    text-align: justify;
+    color: aliceblue;
+  }
+
+  .newsBlock_nav {
+    border: 1px solid orange;
+    display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
   }
 
   .shown {
@@ -75,9 +177,11 @@
   }
 }
 
-@media (width >900px) {
+@media (width > 900px) {
   .newsBlock_button {
     visibility: visible;
+    position: absolute;
+    top: calc(50% - 50px);
     box-sizing: border-box;
     background-color: black;
     border: 1px solid orange;
@@ -88,11 +192,13 @@
   }
 
   #prevPost {
-    margin-right: -25px;
+    left: 0;
+    position: absolute;
   }
 
   #nextPost {
-    margin-left: -25px;
+    right: 0;
+    position: absolute;
   }
 }
 
@@ -102,7 +208,7 @@
   }
 
   to {
-    opacity: 90%;
+    opacity: 80%;
   }
 }
 
@@ -113,5 +219,15 @@
 
   to {
     margin-left: 0px;
+  }
+}
+
+@keyframes popup {
+  from {
+    margin-top: 50px;
+  }
+
+  to {
+    margin-top: 0px;
   }
 }
